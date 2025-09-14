@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>A Small Surprise 🎉</title>
+  <title>Happy Birthday Gopika 🎂</title>
   <style>
     :root {
       --bg:#0d1117;
@@ -20,109 +20,71 @@
                   radial-gradient(circle at 80% 80%, rgba(255,209,102,0.1), transparent 40%),
                   var(--bg);
       overflow-x:hidden;
-    }
-
-    /* Starry effect */
-    body::before {
-      content:"";
-      position:fixed; top:0; left:0; right:0; bottom:0;
-      background-image:
-        radial-gradient(2px 2px at 20% 30%, #fff, transparent),
-        radial-gradient(1.5px 1.5px at 70% 80%, #ffd166, transparent),
-        radial-gradient(2px 2px at 40% 60%, #ff8ba7, transparent);
-      background-repeat:repeat;
-      animation: twinkle 6s linear infinite;
-      z-index:0;
-    }
-    @keyframes twinkle {
-      from { opacity:1; }
-      50% { opacity:0.5; }
-      to { opacity:1; }
-    }
-
-    .center {
-      position:relative;
-      z-index:1;
       display:flex; align-items:center; justify-content:center;
-      padding:20px;
     }
-    .card {
-      width:100%; max-width:600px;
-      border-radius:16px; padding:24px;
-      background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(0,0,0,0.06));
-      box-shadow:0 8px 24px rgba(0,0,0,0.6);
+
+    h1 {
+      font-size:28px; margin-bottom:16px;
+      color:var(--accent);
       text-align:center;
     }
-    h1 {
-      font-size:26px; margin-bottom:10px;
-      color:var(--accent);
+
+    .card {
+      max-width:600px; width:100%;
+      background:rgba(255,255,255,0.05);
+      border-radius:16px;
+      padding:24px;
+      text-align:center;
+      box-shadow:0 8px 24px rgba(0,0,0,0.6);
     }
 
-    .btn-row {
-      display:flex; justify-content:center; gap:12px; margin:16px 0;
-      flex-wrap:wrap;
-    }
     .btn {
       padding:10px 18px;
       border-radius:12px; border:none;
       cursor:pointer; font-weight:600;
       transition:0.3s;
+      margin-bottom:20px;
     }
     .btn.play {
       background:linear-gradient(90deg,var(--accent),var(--accent2));
       color:#111;
       box-shadow:0 4px 12px rgba(255,138,167,0.25);
     }
-    .btn.reveal {
-      background:transparent;
-      border:1px dashed rgba(255,255,255,0.3);
-      color:var(--text);
-    }
     .btn:hover { transform:scale(1.05); }
 
-    .message {
-      margin-top:18px;
-      background:rgba(255,255,255,0.03);
-      border-radius:12px;
-      padding:16px;
-      line-height:1.6;
-      font-size:15px;
-    }
+    .wishes { margin-top:16px; line-height:1.6; }
+    .wish { opacity:0; transition:opacity 1s ease; margin:8px 0; font-size:16px; }
+    .wish.show { opacity:1; }
+
     .big-msg {
-      margin-top:12px;
-      font-size:18px;
+      margin-top:20px;
+      font-size:20px;
       font-weight:700;
       color:var(--accent2);
-      display:none;
+      opacity:0; transition:opacity 1.5s ease;
     }
-    .footer {
-      margin-top:18px;
-      font-size:12px;
-      color:rgba(230,238,248,0.6);
-    }
+    .big-msg.show { opacity:1; }
+
+    .footer { margin-top:20px; font-size:12px; color:rgba(230,238,248,0.6); }
   </style>
 </head>
 <body>
-  <div class="center">
-    <div class="card">
-      <h1>A Small Surprise 🎂</h1>
+  <div class="card">
+    <h1>Happy Birthday Gopika 🎂</h1>
 
-      <div class="btn-row">
-        <button class="btn play" id="musicToggle">Play Song ▶</button>
-        <button class="btn reveal" id="revealBtn">Reveal Message</button>
-      </div>
+    <button class="btn play" id="musicToggle">Play Song ▶</button>
 
-      <div class="message">
-        • Always shine bright ✨<br>
-        • May all your dreams come true 🌟<br>
-        • Here's a little surprise — made just for you!  
-        <div class="big-msg" id="bigMsg">
-          Happy Birthday, Gopika! 🎉🎈
-        </div>
-      </div>
-
-      <div class="footer">Made for Gopika | © Sreesanth S S 2025</div>
+    <div class="wishes">
+      <div class="wish" id="wish1">• Always shine bright ✨</div>
+      <div class="wish" id="wish2">• May all your dreams come true 🌟</div>
+      <div class="wish" id="wish3">• Here's a little surprise — made just for you 🎁</div>
     </div>
+
+    <div class="big-msg" id="bigMsg">
+      Happy Birthday, Gopika! 🎉🎈 Wishing you joy, love, and endless smiles ❤️
+    </div>
+
+    <div class="footer">Made for Gopika | © Sreesanth S S 2025</div>
   </div>
 
   <audio id="bg" src="song.mp3" loop preload="auto"></audio>
@@ -130,27 +92,26 @@
     const music=document.getElementById('bg');
     const playBtn=document.getElementById('musicToggle');
     let playing=false;
+
     playBtn.addEventListener('click',()=>{
       if(!playing){
         music.play();
         playBtn.textContent='Pause ▮▮';
+
+        // Sequence show
+        setTimeout(()=>document.getElementById('wish1').classList.add('show'),1000);
+        setTimeout(()=>document.getElementById('wish2').classList.add('show'),2500);
+        setTimeout(()=>document.getElementById('wish3').classList.add('show'),4000);
+        setTimeout(()=>document.getElementById('bigMsg').classList.add('show'),6000);
+
       } else {
         music.pause();
         playBtn.textContent='Play Song ▶';
+
+        // Reset sequence
+        document.querySelectorAll('.wish,.big-msg').forEach(el=>el.classList.remove('show'));
       }
       playing=!playing;
-    });
-
-    const revealBtn=document.getElementById('revealBtn');
-    const bigMsg=document.getElementById('bigMsg');
-    revealBtn.addEventListener('click',()=>{
-      if(bigMsg.style.display==='block'){
-        bigMsg.style.display='none';
-        revealBtn.textContent='Reveal Message';
-      } else {
-        bigMsg.style.display='block';
-        revealBtn.textContent='Hide Message';
-      }
     });
   </script>
 </body>
